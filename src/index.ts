@@ -11,10 +11,10 @@ import type { View, ViewOptions, ViewLifecycle, ShellContext } from "shells/type
 import type { BaseViewOptions } from "views/types";
 import { createViewState } from "views/types";
 import { EditorChannelAction } from "views/apis/channel-actions";
-import { writeText as writeClipboardText } from "core/modules/Clipboard";
 
 // @ts-ignore
 import style from "./editor.scss?inline";
+import { writeClipboardText } from "core/clipboard-device";
 
 // ============================================================================
 // EDITOR STATE

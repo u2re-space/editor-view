@@ -1,5 +1,5 @@
 import { H } from "fest/lure";
-import { ViewerView } from "frontend/views/viewer";
+import { ViewerView } from "markdown-view/viewer";
 import { UIPhosphorIcon } from "fest/icon";
 
 export interface MarkdownEditorOptions {
