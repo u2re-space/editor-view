@@ -1,13 +1,22 @@
 {
   "name": "editor-view",
   "version": "1.0.0",
-  "description": "Unused markdown editor view (moved to dedicated project)",
-  "main": "index.js",
+  "description": "Standalone markdown editor view module",
+  "type": "module",
+  "main": "./dist/editor-view.js",
+  "module": "./dist/editor-view.js",
+  "exports": {
+    ".": "./dist/editor-view.js",
+    "./src": "./src/index.ts"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite --host 0.0.0.0",
+    "demo": "npm run dev",
+    "test": "vite build --config vite.config.js --mode test",
+    "build": "vite build --config vite.config.js",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "license": "ISC"
 }
