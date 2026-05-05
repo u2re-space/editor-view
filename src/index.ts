@@ -56,8 +56,18 @@ export class EditorView implements View {
     lifecycle: ViewLifecycle = {
         onMount: () => this.onMount(),
         onUnmount: () => this.saveState(),
-        onShow: () => { this._sheet = loadAsAdopted(style) as CSSStyleSheet; },
-        onHide: () => { removeAdopted(this._sheet); this.saveState(); },
+        onShow: () => {
+            this._sheet ??= loadAsAdopted(style) as CSSStyleSheet;
+        },
+        onHide: () => {
+            try {
+                if (this._sheet) removeAdopted(this._sheet);
+            } catch {
+                /* ignore */
+            }
+            this._sheet = null;
+            this.saveState();
+        },
     };
 
     constructor(options: EditorOptions = {}) {
@@ -73,8 +83,6 @@ export class EditorView implements View {
             this.options = { ...this.options, ...options };
             this.shellContext = options.shellContext || this.shellContext;
         }
-
-        this._sheet = loadAsAdopted(style) as CSSStyleSheet;
 
         this.element = H`
             <div class="view-editor">
