@@ -7,14 +7,12 @@
 import { H } from "fest/lure";
 import { ref, affected } from "fest/object";
 import { loadAsAdopted, removeAdopted } from "fest/dom";
-import type { View, ViewOptions, ViewLifecycle, ShellContext } from "shells/types";
+import type { ViewOptions, ViewLifecycle, ShellContext, View } from "shells/types";
 import type { BaseViewOptions } from "views/types";
 import { createViewState } from "views/types";
-import { EditorChannelAction } from "views/apis/channel-actions";
 
 // @ts-ignore
 import style from "./editor.scss?inline";
-import { writeClipboardText } from "core/clipboard-device";
 
 // ============================================================================
 // EDITOR STATE
