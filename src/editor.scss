@@ -14,6 +14,7 @@
         block-size: 100%;
         background-color: var(--view-bg, var(--color-surface, #ffffff));
         color: var(--view-fg, var(--color-on-surface, #1a1a1a));
+        color: contrast-color(var(--view-bg, var(--color-surface, #ffffff)));
     }
 
     .view-editor__toolbar {
@@ -25,6 +26,7 @@
         background-color: var(--view-toolbar-bg, rgba(0, 0, 0, 0.02));
         border-block-end: 1px solid var(--view-border, rgba(0, 0, 0, 0.08));
         flex-shrink: 0;
+        color: contrast-color(var(--view-toolbar-bg, rgba(0, 0, 0, 0.02)));
     }
 
     .view-editor__toolbar-left,
@@ -61,6 +63,7 @@
 
         &:hover {
             background-color: rgba(0, 0, 0, 0.06);
+            color: contrast-color(rgba(0, 0, 0, 0.06));
         }
     }
 
@@ -76,6 +79,7 @@
         border: none;
         background-color: var(--view-editor-bg, #fafafa);
         color: var(--view-fg);
+        color: contrast-color(var(--view-editor-bg, #fafafa));
         font-family: "SF Mono", "Fira Code", "JetBrains Mono", Consolas, monospace;
         font-size: 0.9375rem;
         line-height: 1.6;

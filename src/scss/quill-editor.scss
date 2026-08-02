@@ -14,6 +14,7 @@
     .quill-wrapper {
         flex: 1;
         background: var(--color-surface-container);
+        color: contrast-color(var(--color-surface-container));
         border-radius: var(--radius-xl);
         overflow: hidden;
         display: flex;
@@ -29,6 +30,7 @@
     .quill-editor .ql-toolbar {
         border: none;
         background: var(--color-surface-container-high);
+        color: contrast-color(var(--color-surface-container-high));
         border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     }
 
@@ -113,16 +115,19 @@
 
     .quill-editor .ql-editor::-webkit-scrollbar-track {
         background: var(--color-surface-container);
+        color: contrast-color(var(--color-surface-container));
         border-radius: 4px;
     }
 
     .quill-editor .ql-editor::-webkit-scrollbar-thumb {
         background: var(--color-outline);
+        color: contrast-color(var(--color-outline));
         border-radius: 4px;
     }
 
     .quill-editor .ql-editor::-webkit-scrollbar-thumb:hover {
         background: var(--color-outline-variant);
+        color: contrast-color(var(--color-outline-variant));
     }
 
     /* Responsive Quill editor */
@@ -146,6 +151,7 @@
         background: var(--color-surface-container);
         padding: var(--space-lg);
         color: var(--color-on-surface);
+        color: contrast-color(var(--color-surface-container));
         position: relative;
 
         // Content positioning
@@ -276,6 +282,7 @@
 
                     &:hover {
                         background: var(--color-surface-container-highest);
+                        color: contrast-color(var(--color-surface-container-highest));
                         transform: translateY(-1px);
                         box-shadow: var(--elev-1);
                     }
@@ -293,9 +300,11 @@
                     &.primary {
                         background: var(--color-secondary);
                         color: var(--color-on-secondary);
-
+                        color: contrast-color(var(--color-secondary));
+                        
                         &:hover {
                             background: color-mix(in oklab, var(--color-secondary) 85%, black);
+                            color: contrast-color(color-mix(in oklab, var(--color-secondary) 85%, black));
                         }
                     }
 
@@ -324,6 +333,7 @@
 
                         &.primary:hover ui-icon {
                             color: var(--color-on-secondary);
+                            color: contrast-color(var(--color-secondary));
                         }
                     }
 
@@ -419,20 +429,24 @@
                 background: var(--color-surface-container-low);
                 border-color: var(--color-outline);
                 color: var(--color-on-surface);
+                color: contrast-color(var(--color-surface-container-low));
 
                 &:hover {
                     background: var(--color-surface-container);
                     border-color: var(--color-secondary);
+                    color: contrast-color(var(--color-surface-container));
                 }
 
                 &.primary {
                     background: var(--color-secondary);
                     color: var(--color-on-secondary);
                     border-color: var(--color-secondary);
+                    color: contrast-color(var(--color-secondary));
 
                     &:hover {
                         background: color-mix(in oklab, var(--color-secondary) 85%, black);
                         border-color: color-mix(in oklab, var(--color-secondary) 85%, black);
+                        color: contrast-color(color-mix(in oklab, var(--color-secondary) 85%, black));
                     }
                 }
             }
@@ -441,7 +455,8 @@
         .quill-wrapper {
             .ql-toolbar {
                 background: var(--color-surface-container-low);
-
+                color: contrast-color(var(--color-surface-container-low));
+                
                 .ql-stroke {
                     stroke: var(--color-on-surface);
                 }
@@ -453,11 +468,14 @@
                 .ql-active {
                     color: var(--color-secondary);
                     background: color-mix(in oklab, var(--color-secondary) 15%, transparent);
+                    color: contrast-color(color-mix(in oklab, var(--color-secondary) 15%, transparent));
                 }
             }
 
             .ql-container {
                 background: var(--color-surface-container-low);
+                color: var(--color-on-surface);
+                color: contrast-color(var(--color-surface-container-low));
 
                 .ql-editor {
                     color: var(--color-on-surface);
@@ -470,11 +488,13 @@
                         background: var(--color-surface-container);
                         border-color: var(--color-outline);
                         color: var(--color-on-surface);
+                        color: contrast-color(var(--color-surface-container));
                     }
 
                     blockquote {
                         background: var(--color-surface-container);
                         color: var(--color-on-surface);
+                        color: contrast-color(var(--color-surface-container));
                     }
 
                     table {
@@ -482,6 +502,7 @@
 
                         th {
                             background: var(--color-surface-container);
+                            color: contrast-color(var(--color-surface-container));
                         }
 
                         th, td {
@@ -493,6 +514,7 @@
                         background: var(--color-surface-container);
                         border-color: var(--color-outline);
                         color: var(--color-on-surface);
+                        color: contrast-color(var(--color-surface-container));
                     }
                 }
             }

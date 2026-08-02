@@ -15,6 +15,7 @@
         padding: var(--space-lg);
         max-block-size: 100%;
         background: var(--color-surface-container);
+        color: contrast-color(var(--color-surface-container));
         overflow: hidden;
         position: relative;
 
@@ -55,10 +56,12 @@
 
         &::-webkit-scrollbar-thumb {
             background: var(--color-outline-variant);
+            color: contrast-color(var(--color-outline-variant));
             border-radius: 3px;
 
             &:hover {
                 background: var(--color-outline);
+                color: contrast-color(var(--color-outline));
             }
         }
     }
@@ -74,6 +77,7 @@
         padding: var(--space-lg);
         background: var(--color-surface-container-high);
         margin-block-end: 0;
+        color: contrast-color(var(--color-surface-container-high));
 
         @container (max-inline-size: 768px) {
             flex-direction: column;
@@ -144,6 +148,7 @@
                 border: none;
                 background: var(--color-surface-container);
                 color: var(--color-on-surface);
+                color: contrast-color(var(--color-surface-container));
                 font-size: var(--text-sm);
                 font-weight: var(--font-weight-medium);
                 cursor: pointer;
@@ -164,6 +169,7 @@
 
                 &:hover {
                     background: var(--color-surface-container-high);
+                    color: contrast-color(var(--color-surface-container-high));
                     box-shadow: var(--elev-1);
                 }
 
@@ -175,9 +181,11 @@
                 &.primary {
                     background: var(--color-primary);
                     color: var(--color-on-primary);
+                    color: contrast-color(var(--color-primary));
 
                     &:hover {
                         background: color-mix(in oklab, var(--color-primary) 90%, black);
+                        color: contrast-color(color-mix(in oklab, var(--color-primary) 90%, black));
                     }
                 }
 
@@ -265,6 +273,7 @@
         flex-direction: column;
         background: var(--color-surface);
         overflow: hidden;
+        color: contrast-color(var(--color-surface));
 
         @container (max-inline-size: 768px) {
             border-radius: var(--radius-md);
@@ -278,6 +287,7 @@
         gap: var(--space-sm);
         padding: var(--space-sm) var(--space-md);
         background: var(--color-surface-container-high);
+        color: contrast-color(var(--color-surface-container-high));
         overflow-x: auto;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
@@ -334,10 +344,12 @@
 
         &::-webkit-scrollbar-thumb {
             background: var(--color-outline-variant);
+            color: contrast-color(var(--color-outline-variant));
             border-radius: 3px;
 
             &:hover {
                 background: var(--color-outline);
+                color: contrast-color(var(--color-outline));
             }
         }
 
@@ -350,6 +362,7 @@
         // Focus state
         &:focus {
             background: color-mix(in oklab, var(--color-primary) 2%, var(--color-surface));
+            color: contrast-color(color-mix(in oklab, var(--color-primary) 2%, var(--color-surface)));
         }
 
         @container (max-inline-size: 1024px) {
@@ -370,6 +383,7 @@
         justify-content: space-between;
         padding: var(--space-md) var(--space-lg);
         background: var(--color-surface-container-high);
+        color: contrast-color(var(--color-surface-container-high));
         gap: var(--space-md);
 
         @container (max-inline-size: 1024px) {
@@ -431,6 +445,7 @@
             display: flex;
             gap: var(--space-xs);
             background: var(--color-surface-container);
+            color: contrast-color(var(--color-surface-container));
             padding: 2px;
 
             @container (max-inline-size: 768px) {
@@ -446,16 +461,19 @@
 
                 &:hover {
                     background: var(--color-surface-container-high);
+                    color: contrast-color(var(--color-surface-container-high));
                     transform: none;
                 }
 
                 &.active {
                     background: var(--color-primary);
                     color: var(--color-on-primary);
+                    color: contrast-color(var(--color-primary));
                     font-weight: var(--font-weight-semibold);
 
                     &:hover {
                         background: color-mix(in oklab, var(--color-primary) 85%, black);
+                        color: contrast-color(color-mix(in oklab, var(--color-primary) 85%, black));
                     }
                 }
             }
@@ -471,6 +489,7 @@
         flex-direction: column;
         background: var(--color-surface);
         overflow: hidden;
+        color: contrast-color(var(--color-surface));
 
         @container (max-inline-size: 768px) {
             border-radius: var(--radius-md);
@@ -480,6 +499,7 @@
     .preview-header {
         padding: var(--space-md) var(--space-lg);
         background: var(--color-surface-container-high);
+        color: contrast-color(var(--color-surface-container-high));
 
         @container (max-inline-size: 768px) {
             padding: var(--space-sm) var(--space-md);
@@ -513,10 +533,12 @@
 
         &::-webkit-scrollbar-thumb {
             background: var(--color-outline-variant);
+            color: contrast-color(var(--color-outline-variant));
             border-radius: 3px;
 
             &:hover {
                 background: var(--color-outline);
+                color: contrast-color(var(--color-outline));
             }
         }
 
@@ -541,20 +563,24 @@
                 background: var(--color-surface-container-low);
                 border-color: var(--color-outline);
                 color: var(--color-on-surface);
+                color: contrast-color(var(--color-surface-container-low));
 
                 &:hover {
                     background: var(--color-surface-container);
                     border-color: var(--color-tertiary);
+                    color: contrast-color(var(--color-surface-container));
                 }
 
                 &.primary {
                     background: var(--color-tertiary);
                     color: var(--color-on-tertiary);
                     border-color: var(--color-tertiary);
+                    color: contrast-color(var(--color-tertiary));
 
                     &:hover {
                         background: color-mix(in oklab, var(--color-tertiary) 85%, black);
                         border-color: color-mix(in oklab, var(--color-tertiary) 85%, black);
+                        color: contrast-color(color-mix(in oklab, var(--color-tertiary) 85%, black));
                     }
                 }
             }
@@ -563,18 +589,22 @@
         .editor-panel,
         .preview-panel {
             background: var(--color-surface-container-low);
+            color: contrast-color(var(--color-surface-container-low));
         }
 
         .editor-toolbar {
             background: var(--color-surface-container);
+            color: contrast-color(var(--color-surface-container));
         }
 
         .markdown-textarea {
             background: transparent;
             color: var(--color-on-surface);
+            color: contrast-color(var(--color-surface));
 
             &:focus {
                 background: color-mix(in oklab, var(--color-primary) 3%, var(--color-surface-container-low));
+                color: contrast-color(color-mix(in oklab, var(--color-primary) 3%, var(--color-surface-container-low)));
             }
 
             &::placeholder {
@@ -584,6 +614,7 @@
 
         .editor-footer {
             background: var(--color-surface-container);
+            color: contrast-color(var(--color-surface-container));
 
             .editor-stats {
                 color: var(--color-on-surface-variant);
@@ -591,11 +622,13 @@
 
             .editor-mode {
                 background: var(--color-surface-container-low);
+                color: contrast-color(var(--color-surface-container-low));
             }
         }
 
         .preview-header {
             background: var(--color-surface-container);
+            color: contrast-color(var(--color-surface-container));
 
             h4 {
                 color: var(--color-on-surface);
