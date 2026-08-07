@@ -179,23 +179,46 @@ export class EditorView implements View {
     }
 
     private handleOpen(): void {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = ".md,.markdown,.txt,text/markdown,text/plain";
-        input.onchange = async () => {
-            const file = input.files?.[0];
-            if (file) {
-                try {
-                    const content = await file.text();
+        let promised: any = null;
+
+        // @ts-ignore
+        if (typeof showOpenFilePicker !== "undefined") { // @ts-ignore
+            promised = showOpenFilePicker({
+                types: [{
+                    description: "Markdown files",
+                    accept: { "text/markdown": [".md", ".markdown"] }
+                }]
+            })?.then?.(async (fileHandle) => {
+                if (fileHandle) {
+                    const content = await fileHandle.text();
                     this.setContent(content);
-                    this.options.filename = file.name;
-                    this.showMessage(`Opened ${file.name}`);
-                } catch {
-                    this.showMessage("Failed to open file");
+                    this.options.filename = fileHandle.name;
+                    this.showMessage(`Opened ${fileHandle.name}`);
                 }
-            }
-        };
-        input.click();
+                return fileHandle;
+            })?.catch?.(() => {
+                this.showMessage("Failed to open file");
+                return null;
+            });
+        } else {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = ".md,.markdown,.txt,text/markdown,text/plain";
+            input.onchange = async () => {
+                const file = input.files?.[0];
+                if (file) {
+                    try {
+                        const content = await file.text();
+                        this.setContent(content);
+                        this.options.filename = file.name;
+                        this.showMessage(`Opened ${file.name}`);
+                    } catch {
+                        this.showMessage("Failed to open file");
+                    }
+                }
+            };
+            input.click();
+        }
     }
 
     private handleSave(): void {
@@ -204,11 +227,36 @@ export class EditorView implements View {
 
         const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 250);
+        let promised: any = null;
+
+        // @ts-ignore
+        if (typeof showSaveFilePicker !== "undefined") { // @ts-ignore
+            promised = showSaveFilePicker({
+                suggestedName: filename,
+                types: [{
+                    description: "Markdown files",
+                    accept: { "text/markdown": [".md", ".markdown"] }
+                }]
+            })?.then?.(async (fileHandle) => {
+                if (fileHandle) {
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(content);
+                    await writable.close();
+                } else {
+                    this.showMessage("Failed to save file");
+                }
+                return fileHandle;
+            })?.catch?.((error) => {
+                this.showMessage("Failed to save file");
+                return null;
+            });
+        } else {
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = filename;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 250);
+        }
 
         this.options.onSave?.(content);
         this.showMessage(`Saved ${filename}`);
