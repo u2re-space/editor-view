@@ -4,9 +4,9 @@
  * Shell-agnostic markdown editor component.
  */
 
-import { H } from "fest/lure";
-import { ref, affected } from "fest/object";
-import { loadAsAdopted, removeAdopted } from "fest/dom";
+import { H } from "@fest-lib/lure";
+import { ref, affected } from "@fest-lib/object";
+import { loadAsAdopted, removeAdopted } from "@fest-lib/dom";
 import type { ViewOptions, ViewLifecycle, ShellContext, View } from "shells/types";
 import type { BaseViewOptions } from "views/types";
 import { createViewState } from "views/types";

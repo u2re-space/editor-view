@@ -1,7 +1,7 @@
-import { H } from "fest/lure";
+import { H } from "@fest-lib/lure";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { UIPhosphorIcon } from "fest/icon";
+import { UIPhosphorIcon } from "@fest-lib/icon";
 
 export interface QuillEditorOptions {
     initialContent?: string;

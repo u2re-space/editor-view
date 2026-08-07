@@ -1,6 +1,6 @@
-import { H } from "fest/lure";
+import { H } from "@fest-lib/lure";
 import { ViewerView } from "markdown-view/viewer";
-import { UIPhosphorIcon } from "fest/icon";
+import { UIPhosphorIcon } from "@fest-lib/icon";
 
 export interface MarkdownEditorOptions {
     initialContent?: string;
