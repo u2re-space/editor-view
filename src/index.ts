@@ -5,11 +5,13 @@
  */
 
 import { H } from "@fest-lib/lure";
+import { pickMarkdownFile, saveMarkdownBlob } from "@fest-lib/lure/markdown-assets";
 import { ref, affected } from "@fest-lib/object";
 import { loadAsAdopted, removeAdopted } from "@fest-lib/dom";
 import type { ViewOptions, ViewLifecycle, ShellContext, View } from "shells/types";
 import type { BaseViewOptions } from "views/types";
 import { createViewState } from "views/types";
+import { stashSkuHandoff, takeSkuHandoff } from "com/config/ecosystem-skus";
 
 // @ts-ignore
 import style from "./editor.scss?inline";
@@ -74,6 +76,7 @@ export class EditorView implements View {
 
         const saved = this.stateManager.load();
         this.contentRef.value = options.initialContent || saved?.content || DEFAULT_CONTENT;
+        this.applySkuHandoff();
     }
 
     render(options?: ViewOptions): HTMLElement {
@@ -178,91 +181,47 @@ export class EditorView implements View {
         });
     }
 
-    private handleOpen(): void {
-        let promised: any = null;
+    private applySkuHandoff(): void {
+        const handed = takeSkuHandoff("editor", "document", "viewer");
+        if (!handed?.content?.trim()) return;
+        this.contentRef.value = handed.content;
+        if (handed.filename) this.options.filename = handed.filename;
+        if (this.textarea) this.textarea.value = handed.content;
+    }
 
-        // @ts-ignore
-        if (typeof showOpenFilePicker !== "undefined") { // @ts-ignore
-            promised = showOpenFilePicker({
-                types: [{
-                    description: "Markdown files",
-                    accept: { "text/markdown": [".md", ".markdown"] }
-                }]
-            })?.then?.(async (fileHandle) => {
-                if (fileHandle) {
-                    const content = await fileHandle.text();
-                    this.setContent(content);
-                    this.options.filename = fileHandle.name;
-                    this.showMessage(`Opened ${fileHandle.name}`);
-                }
-                return fileHandle;
-            })?.catch?.(() => {
+    private handleOpen(): void {
+        void pickMarkdownFile().then(async (picked) => {
+            if (!picked?.file) return;
+            try {
+                this.setContent(await picked.file.text());
+                this.options.filename = picked.file.name;
+                this.showMessage(`Opened ${picked.file.name}`);
+            } catch {
                 this.showMessage("Failed to open file");
-                return null;
-            });
-        } else {
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = ".md,.markdown,.txt,text/markdown,text/plain";
-            input.onchange = async () => {
-                const file = input.files?.[0];
-                if (file) {
-                    try {
-                        const content = await file.text();
-                        this.setContent(content);
-                        this.options.filename = file.name;
-                        this.showMessage(`Opened ${file.name}`);
-                    } catch {
-                        this.showMessage("Failed to open file");
-                    }
-                }
-            };
-            input.click();
-        }
+            }
+        });
     }
 
     private handleSave(): void {
         const content = this.contentRef.value;
         const filename = this.options.filename || "document.md";
-
-        const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        let promised: any = null;
-
-        // @ts-ignore
-        if (typeof showSaveFilePicker !== "undefined") { // @ts-ignore
-            promised = showSaveFilePicker({
-                suggestedName: filename,
-                types: [{
-                    description: "Markdown files",
-                    accept: { "text/markdown": [".md", ".markdown"] }
-                }]
-            })?.then?.(async (fileHandle) => {
-                if (fileHandle) {
-                    const writable = await fileHandle.createWritable();
-                    await writable.write(content);
-                    await writable.close();
-                } else {
-                    this.showMessage("Failed to save file");
-                }
-                return fileHandle;
-            })?.catch?.((error) => {
+        void saveMarkdownBlob(content, filename).then((result) => {
+            if (result === "cancelled") return;
+            if (result === "failed") {
                 this.showMessage("Failed to save file");
-                return null;
-            });
-        } else {
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = filename;
-            a.click();
-            setTimeout(() => URL.revokeObjectURL(url), 250);
-        }
-
-        this.options.onSave?.(content);
-        this.showMessage(`Saved ${filename}`);
+                return;
+            }
+            this.options.onSave?.(content);
+            this.showMessage(result === "shared" ? `Shared ${filename}` : `Saved ${filename}`);
+        });
     }
 
     private handlePreview(): void {
+        stashSkuHandoff({
+            dest: "viewer",
+            content: this.contentRef.value,
+            filename: this.options.filename
+        });
         this.shellContext?.navigate("viewer");
     }
 
@@ -285,6 +244,7 @@ export class EditorView implements View {
 
     private onMount(): void {
         console.log("[Editor] Mounted");
+        this.applySkuHandoff();
     }
 
     private showMessage(message: string): void {
