@@ -7,7 +7,7 @@
 import { H } from "@fest-lib/lure";
 import { pickMarkdownFile, saveMarkdownBlob } from "@fest-lib/lure/markdown-assets";
 import { ref, affected } from "@fest-lib/object";
-import { loadAsAdopted, removeAdopted } from "@fest-lib/dom";
+import { loadAsAdopted, removeAdopted } from "@fest-lib/style-lib";
 import type { ViewOptions, ViewLifecycle, ShellContext, View } from "shells/types";
 import type { BaseViewOptions } from "views/types";
 import { createViewState } from "views/types";
