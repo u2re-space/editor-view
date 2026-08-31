@@ -1,9 +1,9 @@
-@use "../../../scss/lib/mixins" as mixins;
-@use "../../../scss/lib/tokens" as tokens;
-@use "../../../scss/lib/config" as config;
-@use "../../../scss/lib/props";
+@use "veela-lib/core/mixins" as mixins;
+@use "veela-lib/core/tokens" as tokens;
+@use "veela-lib/core/config" as config;
+@use "veela-lib/core/properties";
 
-@layer view.editor.markdown {
+@layer components {
     // ============================================================================
     // MARKDOWN EDITOR COMPONENT STYLES
     // ============================================================================

@@ -1,6 +1,6 @@
 /* Enhanced Quill Editor Styles */
 
-@layer view.editor.quill {
+@layer components {
 
     /* Quill Editor Layout */
     .quill-editor-container {
@@ -131,7 +131,7 @@
     }
 
     /* Responsive Quill editor */
-    @media (max-inline-size: 768px) {
+    @media (max-width: 768px) {
         .quill-editor .ql-editor {
             padding: var(--space-md);
             font-size: var(--text-sm);
