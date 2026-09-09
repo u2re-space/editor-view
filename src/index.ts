@@ -6,6 +6,12 @@
 
 import { H } from "@fest-lib/lure";
 import { pickMarkdownFile, saveMarkdownBlob } from "@fest-lib/lure/markdown-assets";
+import {
+    ensureNativeStorageProvide,
+    isNativeStorageAvailable,
+    loadCapacitorDocument,
+    openNativeStorageDocument
+} from "fl-ui/explorer/storage-bridge";
 import { ref, affected } from "@fest-lib/object";
 import { loadAsAdopted, removeAdopted } from "@fest-lib/style-lib";
 import type { ViewOptions, ViewLifecycle, ShellContext, View } from "shells/types";
@@ -190,7 +196,36 @@ export class EditorView implements View {
     }
 
     private handleOpen(): void {
-        void pickMarkdownFile().then(async (picked) => {
+        void (async () => {
+            if (isNativeStorageAvailable()) {
+                await ensureNativeStorageProvide();
+                const opened = await openNativeStorageDocument();
+                if (opened.cancelled) return;
+                if (opened.file) {
+                    const text = await opened.file.text().catch(() => "");
+                    if (text) {
+                        this.setContent(text);
+                        this.options.filename = opened.name || opened.file.name;
+                        this.showMessage(`Opened ${this.options.filename}`);
+                        return;
+                    }
+                }
+                if (opened.uri || opened.virtualPath) {
+                    const doc = await loadCapacitorDocument({
+                        uri: opened.uri,
+                        path: opened.virtualPath
+                    });
+                    if (doc) {
+                        this.setContent(doc.content);
+                        this.options.filename = doc.name;
+                        this.showMessage(`Opened ${doc.name}`);
+                        return;
+                    }
+                }
+                this.showMessage("Could not open that file");
+                return;
+            }
+            const picked = await pickMarkdownFile();
             if (!picked?.file) return;
             try {
                 this.setContent(await picked.file.text());
@@ -199,7 +234,7 @@ export class EditorView implements View {
             } catch {
                 this.showMessage("Failed to open file");
             }
-        });
+        })();
     }
 
     private handleSave(): void {
